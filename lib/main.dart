@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tic Tac Toe',
       theme: ThemeData(
+        primaryColor: Colors.white,
         primarySwatch: Colors.blue,
       ),
       home: TicTacToe(),
@@ -143,23 +144,37 @@ class _TicTacToeState extends State<TicTacToe> {
       appBar: AppBar(
         title: Text('Tic Tac Toe'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (winner.isNotEmpty)
-              Text(
-                'Winner: $winner',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            buildGrid(),
-            SizedBox(height: 20),
-            Text(
-              'Current Player: $currentPlayer',
-              style: TextStyle(fontSize: 18),
+      body: Container(
+        decoration: BoxDecoration(
+            // image: DecorationImage(
+            //   image: AssetImage(
+            //       'assets/xo.jpeg'), // Change to the path of your artistic image
+            //   fit: BoxFit.cover,
+            //   colorFilter: ColorFilter.mode(
+            //     Colors.black87
+            //         .withOpacity(0.4), // Adjust opacity for a subtle effect
+            //     BlendMode.dstATop,
+            //   ),
+            // ),
             ),
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (winner.isNotEmpty)
+                Text(
+                  'Winner: $winner',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              buildGrid(),
+              SizedBox(height: 20),
+              Text(
+                'Current Player: $currentPlayer',
+                style: TextStyle(fontSize: 18),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
