@@ -44,7 +44,13 @@ class _TicTacToeState extends State<TicTacToe> {
       setState(() {
         grid[row][col] = currentPlayer;
         checkForWinner(row, col);
-        switchPlayer();
+        if (isBoardFull() && winner.isEmpty) {
+          showResultDialog("It's a draw!", "The game ended in a draw.");
+        } else if (winner.isNotEmpty) {
+          showResultDialog('Winner: $winner', 'Congratulations, $winner!');
+        } else {
+          switchPlayer();
+        }
       });
     }
   }
@@ -76,6 +82,29 @@ class _TicTacToeState extends State<TicTacToe> {
                 grid[2][0] == currentPlayer))) {
       winner = currentPlayer;
     }
+  }
+
+  void showResultDialog(String title, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  initializeGame();
+                });
+              },
+              child: Text('Play Again'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget buildGrid() {
@@ -122,11 +151,6 @@ class _TicTacToeState extends State<TicTacToe> {
             if (winner.isNotEmpty)
               Text(
                 'Winner: $winner',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            if (winner.isEmpty && isBoardFull())
-              Text(
-                "It's a draw!",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             buildGrid(),
